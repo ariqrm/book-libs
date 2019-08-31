@@ -1,0 +1,22 @@
+.Register {
+    display: flex;
+    flex-grow: 1;
+    height: 100vh;
+    top: 0;
+    position: sticky;
+    background-color: #fff;
+}
+
+.Register h1 {
+    position: absolute;
+    width: 354px;
+    height: 138px;
+    left: 940px;
+    top: 90px;
+
+    font-family: Airbnb Cereal App Book;
+    font-size: 64px;
+    line-height: 83px;
+
+    color: #424242;
+}

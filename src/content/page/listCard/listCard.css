@@ -1,0 +1,98 @@
+.boxContent {
+    max-width: 1374px;
+    position: absolute;
+    margin-top: 1%;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10%;
+    padding: 1%;
+    align-content: center;
+    background-color: #fff;
+    /* box-sizing: border-box; */
+}
+
+.btnAvailable {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 1px 1px gray;
+    background-color: #40f00b;
+    border: none;
+    outline: 0;
+    padding: 12px;
+    border-radius: 5px;
+    /* position: absolute; */
+    top: 1%;
+    left: 5%;
+}
+
+.btnBorrow {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 1px 1px gray;
+    background-color: #d9f00b;
+    border: none;
+    outline: 0;
+    padding: 12px;
+    border-radius: 5px;
+    /* position: absolute; */
+    top: 1%;
+    left: 13%;
+}
+
+.boxContent p#filter {
+    padding: 10px;
+    left: 10%;
+}
+
+.boxLoad {
+    box-sizing: unset;
+}
+
+.counter {
+    position: fixed;
+    border: none;
+    outline: 0;
+    padding: 0px;
+    text-align: center;
+    right: 1%;
+    bottom: 1.5%;
+    font-size: 18px;
+}
+
+.counter input:disabled {
+    background: white;
+    border: none;
+    color: #000000;
+    outline: 0;
+    border-radius: 2px 2px 2px 2px;
+    width: 40%;
+    height: 100%;
+    text-align: center;
+    padding: 12px;
+}
+
+.plus {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #199;
+    text-align: center;
+    cursor: pointer;
+    width: 20%;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.minus {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #199;
+    text-align: center;
+    cursor: pointer;
+    width: 20%;
+    font-size: 18px;
+    border-radius: 5px;
+}

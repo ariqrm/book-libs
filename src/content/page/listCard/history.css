@@ -1,0 +1,44 @@
+table.history thead tr {
+    text-align: center;
+}
+
+table.history tbody tr td {
+    /* margin: 15% */
+    vertical-align: text-top;
+}
+
+table.history thead tr.titleHistory {
+    text-align: center;
+}
+
+table.history tbody tr td p.borrowed {
+    color: #ffffff;
+    display: inline;
+    font-weight: bold;
+    text-shadow: 1px 1px gray;
+    background-color: #d9f00b;
+    border: none;
+    outline: 0;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+table.history tbody tr td p.returned {
+    color: #ffffff;
+    display: inline;
+    font-weight: bold;
+    text-shadow: 1px 1px gray;
+    background-color: #0b9cf0;
+    border: none;
+    outline: 0;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+table.history tbody tr td img {
+    margin: 15%;
+    border-radius: 15px;
+    vertical-align: middle;
+    border-style: none;
+    max-width: 150px;
+}

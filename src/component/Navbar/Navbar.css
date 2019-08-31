@@ -1,0 +1,235 @@
+.dropbtn {
+    background-color: white;
+    color: #424242;
+    padding: 5px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: #424242;
+    background-color: #fff;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 5px;
+
+    /* color: #424242;
+    font-size: 15px;
+    text-decoration: none;
+    display: block; */
+}
+
+.dropdown-content button:hover {
+    color: #000;
+    background-color: #f1f1f1
+}
+
+.dropdown-content a {
+    color: #424242;
+    font-size: 15px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    color: #000;
+    background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: #000;
+
+}
+
+.dropdown .dropbtn svg {
+    transition: .5s;
+}
+
+.dropdown:hover .dropbtn svg {
+    -ms-transform: rotate(180deg);
+    /* IE 9 */
+    -webkit-transform: rotate(180deg);
+    /* Safari 3-8 */
+    transform: rotate(180deg);
+    transition: .5s;
+}
+
+.navigation {
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 10px 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px 25px;
+    position: fixed;
+    width: -webkit-fill-available;
+}
+
+/* .burgerStyle {
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    transition: .5s;
+} */
+.navigation span#burger {
+    cursor: pointer;
+    margin-right: 5%;
+    color: #424242;
+    font-size: 20px;
+}
+
+span#burger:hover {
+    -ms-transform: rotate(90deg);
+    /* IE 9 */
+    -webkit-transform: rotate(90deg);
+    /* Safari 3-8 */
+    transform: rotate(90deg);
+    transition: .5s;
+}
+
+span.library {
+    cursor: pointer;
+    text-decoration: none;
+    width: 187px;
+    height: 47px;
+    top: 10px;
+    font-family: Airbnb Cereal App Book;
+    font-size: 20px;
+    line-height: 39px;
+
+    color: #424242;
+}
+
+.navigation img {
+    cursor: pointer;
+    height: 33px;
+    width: 33px;
+}
+
+.navigation a {
+    position: relative;
+    display: inline;
+    font-weight: bold;
+    margin: 5%;
+    text-decoration: none;
+    color: #424242;
+    background: white;
+}
+
+.navigation .seacrhBox {
+    position: relative;
+    display: -webkit-inline-box;
+    width: 320px;
+    height: auto;
+    margin-left: 5%;
+    margin-right: 5%;
+    background: #FFFFFF;
+    border: 1px solid #CACACA;
+    box-sizing: border-box;
+    border-radius: 20px;
+
+}
+
+.navigation .seacrhBox svg {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: 5px 9px;
+    padding: 5px;
+    color: #707070;
+}
+
+.navigation .seacrhBox input {
+    position: relative;
+    left: 30px;
+    width: 128%;
+    height: 18px;
+    margin: 5px 0;
+    border: none;
+    font-family: Airbnb Cereal App Book;
+    font-size: 17px;
+    color: #424242;
+    outline: none;
+}
+
+.sidenav {
+    width: 347px;
+    height: 1024px;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    display: none;
+    background-color: #fff;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #707070;
+    transition: 0.3s;
+    display: block;
+}
+
+.sidenav img {
+    /* width: 150px; */
+    height: 150px;
+    left: 94px;
+    top: 66px;
+    padding: 8px 8px 8px 32px;
+    color: #707070;
+    transition: 0.3s;
+    display: block;
+    border-radius: 150px;
+}
+
+.sidenav p {
+    width: 204px;
+    left: 72px;
+    top: 232px;
+    text-align: center;
+    font-family: cursive;
+    font-size: 30px;
+    line-height: 39px;
+    margin-top: 5px;
+    color: #000000;
+}
+
+.sidenav a:hover {
+    color: #000;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    /* margin-left: 50px; */
+}

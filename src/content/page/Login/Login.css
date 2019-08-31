@@ -1,0 +1,230 @@
+.Login {
+    display: flex;
+    flex-grow: 1;
+    height: 100vh;
+    top: 0;
+    position: sticky;
+    background-color: #fff;
+}
+
+.Login h1 {
+    position: absolute;
+    width: 354px;
+    height: 138px;
+    left: 940px;
+    top: 90px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 64px;
+    line-height: 83px;
+
+    color: #424242;
+}
+
+.main {
+    flex-basis: 10vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.main img#auth {
+    position: absolute;
+    clip: rect(120px, 1000px, 1024px, 0px);
+    width: 881px;
+    height: 1024px;
+    left: 0px;
+    top: -119px;
+
+}
+
+/* bookshelf */
+.LoginLogo img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 1200px;
+    top: 12px;
+}
+
+.box {
+    position: absolute;
+    width: 378px;
+    height: auto;
+    left: 940px;
+    top: 300px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-sizing: border-box;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0 20px 15px rgba(0, 0, 0, .2);
+}
+
+.box h2 {
+    margin: 0 0 40px;
+    padding: 0;
+    color: #424242;
+    text-transform: uppercase;
+}
+
+.box input {
+    margin-bottom: 20px;
+}
+
+.box textarea {
+    height: 80px;
+    margin-bottom: 40px;
+}
+
+.box input,
+.box textarea {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: none;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #E0E0E0;
+}
+
+.box textarea {
+    margin-bottom: 20px;
+}
+
+.box input[type="submit"] {
+    padding: 5px 15px;
+    border-radius: 5px;
+    width: fit-content;
+    font-weight: bold;
+    border-bottom: none;
+    cursor: pointer;
+    background: #424242;
+    color: #fff;
+    margin: 5px;
+}
+
+.box input[type="button"] {
+    padding: 5px 15px;
+    border-radius: 5px;
+    width: fit-content;
+    font-weight: bold;
+    cursor: pointer;
+    background: #fff;
+    color: #424242;
+    border-bottom: 2px solid #b8b8b8;
+    margin: 5px;
+}
+
+.box input[type="checkbox"] {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.box div {
+    position: relative;
+}
+
+.box div label {
+    border-radius: 5px;
+    padding: 0 2px;
+    position: absolute;
+    background-color: #FFF;
+    top: 20px;
+    left: 10px;
+    color: #424242;
+    transition: .2s;
+    pointer-events: none;
+}
+
+.box input:focus~label,
+.box textarea:focus~label,
+.box input:valid~label,
+.box textarea:valid~label {
+    top: -8px;
+    left: 11px;
+    color: #555555;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.box input:focus,
+.box textarea:focus,
+.box input:valid,
+.box textarea:valid {
+    border-bottom: 2px solid #b8b8b8;
+}
+
+/* By signing up, you agree to Book’s Terms and Conditions & Privacy Policy */
+
+.hero-text3 p {
+    position: absolute;
+    width: 300px;
+    height: 63px;
+    left: 940px;
+    top: 834px;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 22px;
+    color: #424242;
+}
+
+.hero-text3 a {
+    text-decoration: none;
+}
+
+/* Welcome Back, Please Register to create account */
+
+.hero-text4 {
+    position: absolute;
+    width: 300px;
+    height: 110px;
+    left: 940px;
+    top: 205px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 22px;
+    text-decoration: none;
+    color: #424242;
+}
+
+.hero-text2 p {
+    /* Book is a window to the world */
+    position: absolute;
+    width: 808px;
+    height: 318px;
+    left: 56px;
+    top: 88px;
+
+    text-shadow: 1px 1px 10px #000000;
+    /* h-shadow v-shadow blur-radius  */
+    font-weight: bold;
+    font-family: Airbnb Cereal App Book;
+    font-size: 69px;
+    line-height: 83px;
+
+    color: #F9F9F9;
+
+}
+
+.hero-text p {
+    position: absolute;
+    width: 378px;
+    height: 30px;
+    left: 29px;
+    top: 850px;
+
+    text-shadow: 1px 1px 10px #000000;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+
+    color: #FFFFFF;
+
+}

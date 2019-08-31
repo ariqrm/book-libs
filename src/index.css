@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: 'Airbnb Cereal App Book';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Airbnb Cereal App Book'), url('./assets/AirbnbCerealBook.woff') format('woff');
+}
