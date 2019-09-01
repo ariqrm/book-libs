@@ -73,18 +73,28 @@ class NavBar extends Component {
         return (
             <Fragment>
                 <div id="mySidenav" className="sidenav">
-                    <img src="http://clws.karnataka.gov.in/assets/icons/manager.png" alt="" />
-                    <h5>UserID: {this.props.user.userInfo.id}</h5>
-                    <p>{this.props.user.userInfo.Username}</p>
-                    <Link onClick={this.handleSidebar} to="/home/explore">Explore</Link>
-                    <Link onClick={this.handleSidebar} to="/home/history">History</Link>
                     {
-                        this.props.user.userInfo.access === 'admin' ?
-                            <AddModal closeNav={this.handleSidebar} />
-                            :
-                            ''
+                        this.props.userInfo > 0 ?
+                        <Fragment>
+                            <img src="http://clws.karnataka.gov.in/assets/icons/manager.png" alt="" />
+                            <h5>UserID: {this.props.user.userInfo.id}</h5>
+                            <p>{this.props.user.userInfo.Username}</p>
+                            <Link onClick={this.handleSidebar} to="/home/explore">Explore</Link>
+                            <Link onClick={this.handleSidebar} to="/home/history">History</Link>
+                                {
+                                    this.props.user.userInfo.access === 'admin' ?
+                                        <AddModal closeNav={this.handleSidebar} />
+                                        :
+                                        ''
+                                }
+                            <Link onClick={this.handleSignOut} to="/login">Logout</Link>
+                        </Fragment>
+                        :
+                        <Fragment>
+                            <Link onClick={()=>window.location.replace('/login')}>Login</Link>
+                            <Link onClick={()=>window.location.replace('/register')}>Register</Link>
+                        </Fragment>
                     }
-                    <Link onClick={this.handleSignOut} to="/login">Logout</Link>
                 </div>
                 <nav className="navigation">
                     <span id="burger" onClick={this.handleSidebar}>&#9776;</span>
@@ -93,7 +103,7 @@ class NavBar extends Component {
                             <button className="dropbtn">All Category <FontAwesomeIcon icon={faSortDown} /></button>
                         </Link>
                         <div className="dropdown-content">
-                            {genre.genreList ?
+                            {genre.genreList > 0 ?
                                 genre.genreList.map(genre => {
                                     return <button
                                         onClick={this.handleSubmit}
@@ -111,7 +121,7 @@ class NavBar extends Component {
                             <button className="dropbtn">All Time <FontAwesomeIcon icon={faSortDown} /></button>
                         </Link>
                         <div className="dropdown-content">
-                            {book.yearList ?
+                            {book.yearList > 0 ?
                                 book.yearList.map((years, index) => {
                                     return <button
                                         onClick={this.handleSubmit}

@@ -117,7 +117,9 @@ class App extends Component {
         <Router>
           <div className="main" id="main">
             {
+              window.location.pathname === '/login' ||
               window.location.pathname === '/Login' || 
+              window.location.pathname === '/register' ||
               window.location.pathname === '/Register' || 
               window.location.pathname === `/home/detail-book/${data.detail_id_books}` ? '':
               <NavBar filter={this.handleSubmit} />
@@ -125,8 +127,8 @@ class App extends Component {
             <main>
               <Switch>
                 <Route path='/' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
-                <Route path='/Login' component={Login} />
-                <Route path='/Register' component={Register} />
+                <Route path='/login' component={Login} />
+                <Route path='/register' component={Register} />
                 <Route path='/home' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/home/history' render={props => (<HistoryTransaction filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/home/detail-book/:id' render={props => (<ViewDetail id_books={this.id_books} {...props} />)} />
