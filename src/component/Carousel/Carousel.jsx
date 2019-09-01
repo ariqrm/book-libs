@@ -20,7 +20,7 @@ class CarouselBook extends Component {
         this.onExited = this.onExited.bind(this);
     }
     componentDidMount = () => {
-        const host = "http://localhost:3010" || process.env.REACT_APP_HOST_API
+        const host = process.env.REACT_APP_HOST_API || "http://localhost:3010"
         Axios.get(host+'/books/')
             .then(res => {
                 this.setState({ items: res.data.data });
