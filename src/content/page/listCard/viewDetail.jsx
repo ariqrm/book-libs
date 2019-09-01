@@ -176,7 +176,7 @@ class ViewDetail extends Component {
     }
     handleTransactionToApi = () => {
         let data = this.state.formDataTransaction
-        const host = "http://localhost:3010" || process.env.REACT_APP_HOST_API
+        const host = process.env.REACT_APP_HOST_API || "http://localhost:3010"
         const query = (this.state.dataApi.status === "available") ? host+`/transaction/borrow/` : host+`/transaction/return/`
         this.props.Transaction(query, data)
             .then((res) => {

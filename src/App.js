@@ -5,7 +5,7 @@ import Login from './content/page/Login/Login';
 import Register from './content/page/Register/Register';
 import NavBar from './component/Navbar/Navbar';
 import ExploreBook from './content/page/listCard/ExploreBook';
-import listCard from './content/page/listCard/listCard';
+// import listCard from './content/page/listCard/listCard';
 import { userInfo } from './redux/Actions/Users';
 import { getGenre } from './redux/Actions/Genres';
 import { getYear, getFilterBook } from './redux/Actions/Books';
@@ -134,7 +134,7 @@ class App extends Component {
                 <Route path='/home' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/home/history' render={props => (<HistoryTransaction filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/home/detail-book/:id' render={props => (<ViewDetail id_books={this.id_books} {...props} />)} />
-                <Route path='/homelist' exact component={listCard} />
+                {/* <Route path='/homelist' exact component={listCard} /> */}
                 <Route component={NoMatch} />
               </Switch>
             </main>
