@@ -1,5 +1,6 @@
 import Axios from 'axios';
-const host = "http://localhost:3010" || process.env.REACT_APP_HOST_API
+const host = process.env.REACT_APP_HOST_API || "http://localhost:3010"
+
 const token = JSON.parse(localStorage.getItem("Token="))
 export const getReturn = (id) => {
     return {
