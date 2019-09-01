@@ -85,7 +85,7 @@ class App extends Component {
       detail_id_books: id,
     })
   }
-  componentDidMount = async () => {
+  componentDidMount = () => {
     this.props.Book()
       .then(res => {
         this.setState({
@@ -105,10 +105,12 @@ class App extends Component {
           getYear: this.props.book.yearList,
         })
       })
-    await this.props.UserInfo()
-    const id_users = this.props.user.userInfo.id
-    await this.props.GetBorrow(id_users)
-    await this.props.GetReturn(id_users)
+    this.props.UserInfo()
+      .then(res => {
+        const id_users = this.props.user.userInfo.id
+        this.props.GetBorrow(id_users)
+        this.props.GetReturn(id_users)
+      })
   }
   render(){
     const data = this.state

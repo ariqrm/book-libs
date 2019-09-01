@@ -35,10 +35,12 @@ class Login extends Component {
                 if (data.success) {
                     localStorage.setItem('Token=', JSON.stringify(data.data.token));
                     localStorage.setItem('Data=', JSON.stringify(data.data.data));
-                    const host = window.location.host
-                    document.location.replace(host + "/home")
+                    window.location.replace("/home")
                 } else {
-                    console.log("gagal")
+                    this.setState({
+                        data: data,
+                        Response: true,
+                    })
                 }
             })
             .catch(err => console.log("error: ", err))
@@ -46,15 +48,15 @@ class Login extends Component {
     handleDataAuth = () => {
         const auth = localStorage.getItem('Token=')
         if (auth) {
-            const host = window.location.host
-            document.location.replace(host + "/home")
+            this.props.history.push(`/home`)
+            // const host = window.location.host
+            // window.location.replace(host+"/home")
         }
     }
     render() {
         this.handleDataAuth()
         return (
             <Fragment>
-                <form>
                     <div className="Login">
                         <div className="main">
                             <img id="auth" src="https://s3-alpha-sig.figma.com/img/42af/e6f5/6406744294af0e36bd58a6bb9d5bade1?Expires=1567382400&Signature=GNF0t9kIgABnuHMnI7Ygre64zezNTfYZI416AXZH5mWHiNNpU4BQ6ElmBqhgmicEp8cNBa7Tg0pmpu9OHUyENjfMdm7E~h4dSl4WfuiGVrPQWZHB0b1MfC1-9E38KnqLacN4EpVZtjNOV6gB4vvvBKW80z1bGRhLjv2z9OrCmunrUFUkStBp~2~ExRLmOaAQegWWJZLJ2RrFZD~0qvYk~kTnnhk5J9HdIiGYpy5yvXaUq3isyopNfbL6HZlspAlw772iad5XQ4CWGIuWTg4mtKzZpKg39GWuO1Ej9h1GCYbDpdE1DYhw1zS4k0dHkg6JdI-zL9N0pXk7RF~fqc-7Uw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="" />
@@ -98,7 +100,6 @@ class Login extends Component {
                             <input type="button" onClick={() => this.props.history.push(`/Register`)} value="Sign Up" />
                         </div>
                     </div>
-                </form>
                 <ResponseModal open={this.state.Response} data={this.state.data} />
             </Fragment>
         )

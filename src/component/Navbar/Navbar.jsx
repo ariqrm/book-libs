@@ -61,6 +61,7 @@ class NavBar extends Component {
     handleSignOut = () => {
         localStorage.clear()
         this.closeNav()
+        window.location.replace('/login')
     }
     componentDidMount = async () => {
         this.closeNav()
@@ -74,12 +75,16 @@ class NavBar extends Component {
             <Fragment>
                 <div id="mySidenav" className="sidenav">
                     {
-                        this.props.userInfo > 0 ?
+                        this.props.user.userInfo.length === 0 ?
+                        <Fragment>
+                            <Link onClick={()=>window.location.replace('/login')}>Login</Link>
+                            <Link onClick={()=>window.location.replace('/register')}>Register</Link>
+                        </Fragment>
+                        :
                         <Fragment>
                             <img src="http://clws.karnataka.gov.in/assets/icons/manager.png" alt="" />
-                            <h5>UserID: {this.props.user.userInfo.id}</h5>
+                            <h5> Member Code: {this.props.user.userInfo.id}</h5>
                             <p>{this.props.user.userInfo.Username}</p>
-                            <Link onClick={this.handleSidebar} to="/home/explore">Explore</Link>
                             <Link onClick={this.handleSidebar} to="/home/history">History</Link>
                                 {
                                     this.props.user.userInfo.access === 'admin' ?
@@ -87,12 +92,7 @@ class NavBar extends Component {
                                         :
                                         ''
                                 }
-                            <Link onClick={this.handleSignOut} to="/login">Logout</Link>
-                        </Fragment>
-                        :
-                        <Fragment>
-                            <Link onClick={()=>window.location.replace('/login')}>Login</Link>
-                            <Link onClick={()=>window.location.replace('/register')}>Register</Link>
+                            <Link onClick={this.handleSignOut}>Logout</Link>
                         </Fragment>
                     }
                 </div>
@@ -103,16 +103,19 @@ class NavBar extends Component {
                             <button className="dropbtn">All Category <FontAwesomeIcon icon={faSortDown} /></button>
                         </Link>
                         <div className="dropdown-content">
-                            {genre.genreList > 0 ?
+                            {genre.genreList !== null ?
                                 genre.genreList.map(genre => {
-                                    return <button
+                                    return (
+                                    <Link to="/home">
+                                        <button
                                         onClick={this.handleSubmit}
                                         name="G.NameOfGenre"
                                         key={genre.id} to="#"
                                         value={genre.NameOfGenre} >{genre.NameOfGenre}
-                                    </button>
+                                        </button>
+                                    </Link>)
                                 })
-                                : <button>Loading...</button>
+                                : <Link to="/home"><button>Loading...</button></Link>
                             }
                         </div>
                     </div>
@@ -121,17 +124,21 @@ class NavBar extends Component {
                             <button className="dropbtn">All Time <FontAwesomeIcon icon={faSortDown} /></button>
                         </Link>
                         <div className="dropdown-content">
-                            {book.yearList > 0 ?
+                            {book.yearList !== null ?
                                 book.yearList.map((years, index) => {
-                                    return <button
-                                        onClick={this.handleSubmit}
-                                        name="B.DateReleased"
-                                        key={index} to="#"
-                                        value={years.year}>{years.year}
-                                    </button>
+                                    return (
+                                    <Link to="/home">
+                                        <button
+                                            onClick={this.handleSubmit}
+                                            name="B.DateReleased"
+                                            key={index} to="#"
+                                            value={years.year}>{years.year}
+                                        </button>
+                                    </Link>
+                                    )
 
                                 })
-                                : <button>Loading...</button>
+                                : <Link to="/home"><button>Loading...</button></Link>
                             }
                         </div>
                     </div>

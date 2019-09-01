@@ -38,12 +38,6 @@ class Register extends Component {
         this.props.SignUp(dataUser)
             .then((res) => {
                 const data = res.action.payload.data
-                if (data === undefined) {
-                    this.setState({
-                        data: {message: 'undefinded'},
-                        Response: true,
-                    })
-                } else
                 if (data.success) {
                     this.setState({
                         data: data,
@@ -51,18 +45,14 @@ class Register extends Component {
                     })
                     this.handleSignIn(dataUser)
                 } else {
+                    console.log("error", dataUser)
                     this.setState({
                         data: data,
                         Response: true,
                     })
                 }
             })
-            .catch(err => {
-                this.setState({
-                    data: "msg",
-                    Response: true,
-                })
-            })
+            .catch(err => console.log("error: ", err))
     }
     handleRegister = (event) => {
         var newFormData = { ...this.state.formData };
@@ -77,8 +67,9 @@ class Register extends Component {
     handleDataAuth = () => {
         const auth = localStorage.getItem('Token=')
         if (auth) {
-            const host = window.location.host
-            document.location.replace(host + "/home")
+            this.props.history.push(`/home`)
+            // const host = window.location.host
+            // document.location.replace(host + "/home")
         }
     }
     render() {
@@ -87,7 +78,7 @@ class Register extends Component {
             <Fragment>
                 <div className="Register">
                     <div className="main">
-                        <img src="https://s3-alpha-sig.figma.com/img/42af/e6f5/6406744294af0e36bd58a6bb9d5bade1?Expires=1567382400&Signature=GNF0t9kIgABnuHMnI7Ygre64zezNTfYZI416AXZH5mWHiNNpU4BQ6ElmBqhgmicEp8cNBa7Tg0pmpu9OHUyENjfMdm7E~h4dSl4WfuiGVrPQWZHB0b1MfC1-9E38KnqLacN4EpVZtjNOV6gB4vvvBKW80z1bGRhLjv2z9OrCmunrUFUkStBp~2~ExRLmOaAQegWWJZLJ2RrFZD~0qvYk~kTnnhk5J9HdIiGYpy5yvXaUq3isyopNfbL6HZlspAlw772iad5XQ4CWGIuWTg4mtKzZpKg39GWuO1Ej9h1GCYbDpdE1DYhw1zS4k0dHkg6JdI-zL9N0pXk7RF~fqc-7Uw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="" />
+                        <img id="auth" src="https://s3-alpha-sig.figma.com/img/42af/e6f5/6406744294af0e36bd58a6bb9d5bade1?Expires=1567382400&Signature=GNF0t9kIgABnuHMnI7Ygre64zezNTfYZI416AXZH5mWHiNNpU4BQ6ElmBqhgmicEp8cNBa7Tg0pmpu9OHUyENjfMdm7E~h4dSl4WfuiGVrPQWZHB0b1MfC1-9E38KnqLacN4EpVZtjNOV6gB4vvvBKW80z1bGRhLjv2z9OrCmunrUFUkStBp~2~ExRLmOaAQegWWJZLJ2RrFZD~0qvYk~kTnnhk5J9HdIiGYpy5yvXaUq3isyopNfbL6HZlspAlw772iad5XQ4CWGIuWTg4mtKzZpKg39GWuO1Ej9h1GCYbDpdE1DYhw1zS4k0dHkg6JdI-zL9N0pXk7RF~fqc-7Uw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="" />
                         <div className="hero-text2">
                             <p>Book is a window to the world</p>
                         </div>

@@ -16,6 +16,8 @@ class ResponseModal extends Component {
     handleReload = () => {
         if (this.props.data.message === "succes return" || "succes borrow") {
             window.location.reload()
+        } else if (this.props.data.message === "wrong input") {
+            window.location.reload()
         } else if (this.props.data.message === "book data updated") {
             window.location.reload()
         } else if (this.props.data.message === "book deleted") {
