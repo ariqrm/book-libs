@@ -17,8 +17,8 @@ export const signUp = (data) => {
 export const handleDataAuth = () => {
     const auth = localStorage.getItem('Token=')
     if (!auth) {
-        const host = window.location.host
-        document.location.replace(host + "/login")
+        const hosts = window.location.host
+        window.location.replace(hosts + "/login")
     }
 }
 export const userInfo = () => {

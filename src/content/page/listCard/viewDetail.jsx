@@ -5,6 +5,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import './viewDetail.css'
 import { getBookId, deleteBook, updateBook, transaction } from '../../../redux/Actions/Books';
+import { checkBorrowed } from '../../../redux/Actions/Transactions';
 import { getGenre } from '../../../redux/Actions/Genres';
 import { openModal, closeModal } from '../../../redux/Actions/Modals';
 import { connect } from 'react-redux';
@@ -47,9 +48,11 @@ class ViewDetail extends Component {
     }
     componentDidMount = async () => {
         let myId = this.props.match.params.id;
+        console.log(myId, 'id')
         await this.props.Genre();
         await this.props.getBookId(myId);
         await this.props.UserInfo()
+        this.props.CheckBorrowed(myId)
         let data = this.props.book.bookDetail
         this.setState({
             getGenre: this.props.genre.genreList,
@@ -91,7 +94,7 @@ class ViewDetail extends Component {
         if (this.state.dataApi.status === "available") {
             this.open()
         } else
-            if (this.state.dataApi.status === "available") {
+            if (this.state.dataApi.status === "borrowed") {
                 this.close()
             }
     }
@@ -115,7 +118,6 @@ class ViewDetail extends Component {
         this.setState({
             formDataTransaction: newformDataTransaction
         })
-        console.log(this.state.formDataTransaction)
     }
     handleUpdate = () => {
         const myId = this.props.match.params.id;
@@ -217,6 +219,8 @@ class ViewDetail extends Component {
     }
     render() {
         // console.log('id', this.props.match.params.id)
+        const checkBorrowedData = this.props.transaction.checkBorrowed
+        console.log('data', checkBorrowedData)
         const { getGenre, dataApi, formData } = this.state
         const rawDate = new Date(this.state.dataApi.date_released)
         let year = rawDate.getFullYear()
@@ -234,7 +238,7 @@ class ViewDetail extends Component {
                             <div className="boxModal">
                                 <FormGroup>
                                     <Input onChange={this.handleFormTransaction} name="id_users" type="text" required />
-                                    <Label>Id Users</Label>
+                                    <Label>Member Code</Label>
                                 </FormGroup>
                                 <FormGroup>
                                     <Input onChange={this.handleFormTransaction} name="id_book" type="text" value={this.props.match.params.id} disabled />
@@ -333,6 +337,17 @@ class ViewDetail extends Component {
                         <div id="btnborrow">
                         </div>
                         <div id="btnreturn">
+                            {
+                                dataApi.status === "borrowed" && checkBorrowedData > 0 ?
+                                (
+                                    <Fragment>
+                                        <p>Borrowed By : {checkBorrowedData.Username} </p>
+                                        <p>Date Borrowed : {new Date(checkBorrowedData.Date).toDateString()} </p>
+                                    </Fragment>
+                                )
+                                :
+                                ''
+                            }
                         </div>
                         <p id="title"> {dataApi.title} </p>
                         <p id="Released">{new Date(dataApi.date_released).toDateString()}</p>
@@ -351,11 +366,13 @@ const mapStateToProps = state => {
         modal: state.modal,
         genre: state.genre,
         user: state.user,
+        transaction: state.transaction,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         UserInfo: () => dispatch(userInfo()),
+        CheckBorrowed: (id) => dispatch(checkBorrowed(id)),
         DeleteBook: (id) => dispatch(deleteBook(id)),
         UpdateBook: (id, data) => dispatch(updateBook(id, data)),
         Transaction: (query, id) => dispatch(transaction(query, id)),
