@@ -1,10 +1,10 @@
 import Axios from 'axios';
-
+const host = "http://localhost:3010" || process.env.REACT_APP_HOST_API
 const token = JSON.parse(localStorage.getItem("Token="))
 export const getReturn = (id) => {
     return {
         type: 'GET_TRANSACTION_RETURN',
-        payload: Axios.get(`http://localhost:3010/transaction/borrowed/${id}`, {
+        payload: Axios.get(host+`/transaction/borrowed/${id}`, {
             headers: {
                 Authorization: token,
             },
@@ -14,7 +14,7 @@ export const getReturn = (id) => {
 export const getBorrow = (id) => {
     return {
         type: 'GET_TRANSACTION_BORROW',
-        payload: Axios.get(`http://localhost:3010/transaction/returned/${id}`, {
+        payload: Axios.get(host+`/transaction/returned/${id}`, {
             headers: {
                 Authorization: token,
             },

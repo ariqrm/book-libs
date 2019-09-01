@@ -1,10 +1,10 @@
 import Axios from 'axios';
-
+const host = "http://localhost:3010" || process.env.REACT_APP_HOST_API
 const token = JSON.parse(localStorage.getItem("Token="))
 export const getBook = () => {
     return {
         type: 'GET_BOOK',
-        payload: Axios.get(`http://localhost:3010/books`, {
+        payload: Axios.get(host+`/books`, {
             headers: {
                 Authorization: token,
             },
@@ -18,7 +18,7 @@ export const getFilterBook = (title, coloumn, page, available) => {
     const Available = available || "available"
     return {
         type: 'GET_BOOK_FILTER',
-        payload: Axios.get(`http://localhost:3010/books?search=${Title}&available=${Available}&coloum=${Coloumn}&sort=id&by=DESC&limit=12&page=${Page}`, {
+        payload: Axios.get(host+`/books?search=${Title}&available=${Available}&coloum=${Coloumn}&sort=id&by=DESC&limit=12&page=${Page}`, {
             headers: {
                 Authorization: token,
             },
@@ -28,7 +28,7 @@ export const getFilterBook = (title, coloumn, page, available) => {
 export const getBookId = (id) => {
     return {
         type: 'GET_BOOK_ID',
-        payload: Axios.get(`http://localhost:3010/books/${id}`, {
+        payload: Axios.get(host+`/books/${id}`, {
             headers: {
                 Authorization: token,
             },
@@ -38,7 +38,7 @@ export const getBookId = (id) => {
 export const addBook = (data) => {
     return {
         type: 'ADD_BOOK',
-        payload: Axios.post('http://localhost:3010/books', data, {
+        payload: Axios.post(host+'/books', data, {
             headers: {
                 Authorization: token,
             },
@@ -48,7 +48,7 @@ export const addBook = (data) => {
 export const deleteBook = (myId) => {
     return {
         type: 'DELETE_BOOK',
-        payload: Axios.delete(`http://localhost:3010/books/${myId}`, {
+        payload: Axios.delete(host+`/books/${myId}`, {
             headers: {
                 Authorization: token,
             },
@@ -58,7 +58,7 @@ export const deleteBook = (myId) => {
 export const updateBook = (myId, data) => {
     return {
         type: 'UPDATE_BOOK',
-        payload: Axios.patch(`http://localhost:3010/books/${myId}`, data, {
+        payload: Axios.patch(host+`/books/${myId}`, data, {
             headers: {
                 Authorization: token,
             },
@@ -78,6 +78,6 @@ export const transaction = (query, data) => {
 export const getYear = () => {
     return {
         type: 'GET_YEAR',
-        payload: Axios.get(`http://localhost:3010/books/year`)
+        payload: Axios.get(host+`/books/year`)
     }
 }

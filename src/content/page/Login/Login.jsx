@@ -35,7 +35,8 @@ class Login extends Component {
                 if (data.success) {
                     localStorage.setItem('Token=', JSON.stringify(data.data.token));
                     localStorage.setItem('Data=', JSON.stringify(data.data.data));
-                    window.location.replace('/home')
+                    const host = window.location.host
+                    document.location.replace(host + "/home")
                 } else {
                     console.log("gagal")
                 }
@@ -45,7 +46,8 @@ class Login extends Component {
     handleDataAuth = () => {
         const auth = localStorage.getItem('Token=')
         if (auth) {
-            document.location.replace("http://localhost:3000/home")
+            const host = window.location.host
+            document.location.replace(host + "/home")
         }
     }
     render() {

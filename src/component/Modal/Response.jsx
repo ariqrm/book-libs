@@ -16,16 +16,15 @@ class ResponseModal extends Component {
     handleReload = () => {
         if (this.props.data.message === "succes return" || "succes borrow") {
             window.location.reload()
-        } else
-            if (this.props.data.message === "book data updated") {
-                window.location.reload()
-            } else if (this.props.data.message === "book deleted") {
-                // window.location.replace ('/home')
-                this.props.history.push('/home')
-            } else {
-                // window.location.replace('/home')
-                this.props.history.push('/home')
-            }
+        } else if (this.props.data.message === "book data updated") {
+            window.location.reload()
+        } else if (this.props.data.message === "book deleted") {
+            // window.location.replace ('/home')
+            this.props.history.push('/home')
+        } else {
+            // window.location.replace('/home')
+            this.props.history.push('/home')
+        }
     }
     render() {
         console.log(this.props.data)

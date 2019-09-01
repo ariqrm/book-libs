@@ -67,7 +67,8 @@ class Register extends Component {
     handleDataAuth = () => {
         const auth = localStorage.getItem('Token=')
         if (auth) {
-            document.location.replace("http://localhost:3000/home")
+            const host = window.location.host
+            document.location.replace(host + "/home")
         }
     }
     render() {

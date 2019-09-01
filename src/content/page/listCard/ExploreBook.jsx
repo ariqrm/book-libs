@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import Card from '../../../component/Card/Card'
+import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 // import { handleDataAuth } from '../../../redux/Actions/Users';
 import { getFilterBook } from '../../../redux/Actions/Books';
 import './listCard.css'
 import PageButton from './PageButton';
+import CarouselBook from '../../../component/Carousel/Carousel';
 
 class ExploreBook extends Component {
     constructor(props) {
@@ -102,12 +104,12 @@ class ExploreBook extends Component {
     }
     render() {
         // handleDataAuth()
-        console.log('data state', this.props.state)
-        console.log('data props', this.props)
-        const { book } = this.props;
+        // console.log('data state', this)
+        const { book } = this.props || '';
         return (
             <Fragment>
                 <div style={{ paddingTop: '50px' }}>
+                <CarouselBook />
                 </div>
                 <div className="boxContent">
                     <h1 style={{ color: "grey", textAlign: "center" }}>List Book</h1 >
@@ -124,12 +126,13 @@ class ExploreBook extends Component {
                     }
 
                     {
-                        book.bookList ? book.bookList.map(book => {
+                        book.bookList.length > 0 ? book.bookList.map(book => {
                             return <Card key={book.id} data={book} viewDitail={this.handleViewDetail} remove={this.handleRemove} update={this.handleUpdate} />
                         })
                             :
                             <div className="boxLoad">
-                                <p style={{ fontSize: 50, textAlign: 'center' }}>Loading</p>
+                                <p style={{ fontSize: 50, textAlign: 'center' }}>Loading
+                                <Spinner style={{ width: '3rem', height: '3rem', fontSize: 50, textAlign: 'center' }} color="secondary" /></p>
                             </div>
                     }
                     <PageButton data={this.props.data} pagination={this.handlePage} />

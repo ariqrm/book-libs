@@ -1,4 +1,4 @@
-// const token = JSON.parse(localStorage.getItem("Token="))
+
 export const openModal = () => {
     return {
         type: 'OPEN_MODAL'

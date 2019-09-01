@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, FormGroup, Form } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
@@ -175,11 +175,9 @@ class ViewDetail extends Component {
             })
     }
     handleTransactionToApi = () => {
-        // let myId = { 
-        //     id_users: this.props.user.userInfo.id,
-        //     id_book: this.props.match.params.id }
         let data = this.state.formDataTransaction
-        const query = (this.state.dataApi.status === "available") ? `http://localhost:3010/transaction/borrow/` : `http://localhost:3010/transaction/return/`
+        const host = "http://localhost:3010" || process.env.REACT_APP_HOST_API
+        const query = (this.state.dataApi.status === "available") ? host+`/transaction/borrow/` : host+`/transaction/return/`
         this.props.Transaction(query, data)
             .then((res) => {
                 const data = res.action.payload.data
@@ -250,7 +248,7 @@ class ViewDetail extends Component {
                         {/* </Form> */}
                     </Modal>
                     <Modal isOpen={this.props.modal.myModal} toggle={this.props.closeModal} size="lg">
-                        {/* <Form onSubmit={this.handleUpdate}> */}
+                        <Form>
                         <ModalHeader style={{ fontWeight: "bold", color: "black" }} toggle={this.props.closeModal} charCode="x">Edit Data</ModalHeader>
                         <ModalBody>
                             <div className="boxModal">
@@ -295,7 +293,7 @@ class ViewDetail extends Component {
                         <ModalFooter>
                             <Button onClick={this.handleUpdate} color="warning" className="ModalBtn">Save</Button>
                         </ModalFooter>
-                        {/* </Form> */}
+                        </Form>
                     </Modal>
                 </div>
                 <div className="pageDetail">
@@ -337,7 +335,6 @@ class ViewDetail extends Component {
                         <div id="btnreturn">
                         </div>
                         <p id="title"> {dataApi.title} </p>
-                        {/* <p id="Released">{new Date(dateSplit).toDateString()}</p> */}
                         <p id="Released">{new Date(dataApi.date_released).toDateString()}</p>
                         <p id="status"> {dataApi.status}</p>
                         <p id="desc">  {dataApi.description} </p>

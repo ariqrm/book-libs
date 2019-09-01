@@ -31,10 +31,6 @@ class NavBar extends Component {
             this.props.filter(event.target.value, event.target.name, page, status)
         }
     }
-    handleHome = () => {
-        document.location.replace("http://localhost:3000/home")
-        // this.props.history.push('/home')
-    }
     handleReload = () => {
         document.location.reload()
     }
@@ -67,6 +63,10 @@ class NavBar extends Component {
         this.closeNav()
     }
     componentDidMount = async () => {
+        this.closeNav()
+        this.setState({
+            sidebar: false
+        })
     }
     render() {
         const { genre, book } = this.props
@@ -74,7 +74,7 @@ class NavBar extends Component {
             <Fragment>
                 <div id="mySidenav" className="sidenav">
                     <img src="http://clws.karnataka.gov.in/assets/icons/manager.png" alt="" />
-                    <h5>My id: {this.props.user.userInfo.id}</h5>
+                    <h5>UserID: {this.props.user.userInfo.id}</h5>
                     <p>{this.props.user.userInfo.Username}</p>
                     <Link onClick={this.handleSidebar} to="/home/explore">Explore</Link>
                     <Link onClick={this.handleSidebar} to="/home/history">History</Link>

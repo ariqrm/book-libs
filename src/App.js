@@ -12,6 +12,7 @@ import { getYear, getFilterBook } from './redux/Actions/Books';
 import { getReturn, getBorrow } from './redux/Actions/Transactions';
 import { connect } from 'react-redux';
 import ViewDetail from './content/page/listCard/viewDetail';
+import HistoryTransaction from './content/page/listCard/history';
 
 const NoMatch = () => {
     return <h2>404, Not Found</h2>
@@ -123,10 +124,11 @@ class App extends Component {
             }
             <main>
               <Switch>
-                <Route path='/' exact component={ExploreBook} />
+                <Route path='/' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/Login' component={Login} />
                 <Route path='/Register' component={Register} />
                 <Route path='/home' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
+                <Route path='/home/history' render={props => (<HistoryTransaction filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/home/detail-book/:id' render={props => (<ViewDetail id_books={this.id_books} {...props} />)} />
                 <Route path='/homelist' exact component={listCard} />
                 <Route component={NoMatch} />
