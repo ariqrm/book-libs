@@ -92,7 +92,7 @@ export class AddModal extends React.Component {
                         <ModalBody>
                             <div className="boxModal">
                                 <FormGroup>
-                                    <Input onChange={this.handleAddBook} name="Image" type="text" placeholder="Url Image" required />
+                                    <Input onChange={this.handleAddBook} name="Image" type="file" placeholder="Url Image" required />
                                     <Label>Url image</Label>
                                 </FormGroup>
                                 <FormGroup>
@@ -126,18 +126,6 @@ export class AddModal extends React.Component {
                     </Form>
                 </Modal>
                 <ResponseModal open={this.state.isAddData} data={this.state.bookAdded} />
-                {/* <Modal isOpen={this.state.isAddData}>
-                    <ModalHeader style={{ textAlign: "center", fontWeight: "bold", color: "black" }}>Success</ModalHeader>
-                    <ModalBody>
-                        <div className="boxModal">
-                            <p style={{ textAlign: "center", fontWeight: "bold", color: "black" }}>Success Add Book</p>
-                            
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="success" className="ModalBtn" onClick={this.handleHome}>Ok</Button>
-                    </ModalFooter>
-                </Modal> */}
             </div>
         );
     }

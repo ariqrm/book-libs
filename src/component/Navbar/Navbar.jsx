@@ -63,7 +63,7 @@ class NavBar extends Component {
         this.closeNav()
         window.location.replace('/login')
     }
-    componentDidMount = async () => {
+    componentDidMount = () => {
         this.closeNav()
         this.setState({
             sidebar: false
@@ -89,7 +89,7 @@ class NavBar extends Component {
                             <p> Member Code: </p>
                             <p>{this.props.user.userInfo.id}</p>
                             <div className="sidenavContent">
-                                <Link onClick={this.handleSidebar} to="/history">History</Link>
+                                <Link onClick={this.handleSidebar} to="/home/history">History</Link>
                                     {
                                         this.props.user.userInfo.access === 'admin' ?
                                             <AddModal closeNav={this.handleSidebar} />

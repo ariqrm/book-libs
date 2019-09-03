@@ -124,6 +124,7 @@ class App extends Component {
           <div className="main" id="main">
             <main>
             {
+              window.location.pathname === '/home/history' ||
               window.location.pathname === '/login' ||
               window.location.pathname === '/Login' || 
               window.location.pathname === '/register' ||
@@ -136,7 +137,10 @@ class App extends Component {
                 <Route path='/login' component={Login} />
                 <Route path='/register' component={Register} />
                 <Route path='/home' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
-                <Route path='/history' render={props => (<HistoryTransaction data={this.state} {...props} />)} />
+                <Route path='/home/history' 
+                // component={HistoryTransaction}
+                render={props => (<HistoryTransaction data={this.state} {...props} />)} 
+                />
                 <Route path='/home/detail-book/:id' render={props => (<ViewDetail id_books={this.id_books} {...props} />)} />
                 {/* <Route path='/homelist' exact component={listCard} /> */}
                 <Route component={NoMatch} />

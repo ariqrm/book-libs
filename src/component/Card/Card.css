@@ -75,3 +75,7 @@
 .product-status#borrowed {
     background-color: #d9f00b;
 }
+
+.product-status#pending {
+    background-color: #f01e0b;
+}

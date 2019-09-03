@@ -34,9 +34,12 @@ class ExploreBook extends Component {
         if (event.target.name === "borrowed") {
             this.props.filter(title, coloum, page, status)
         } else
-            if (event.target.name === "available") {
-                this.props.filter(title, coloum, page, status)
-            }
+        if (event.target.name === "available") {
+            this.props.filter(title, coloum, page, status)
+        } else
+        if (event.target.name === "pending") {
+            this.props.filter(title, coloum, page, status)
+        }
     }
     handlePage = (page) => {
         const title = this.props.data.title
@@ -58,7 +61,7 @@ class ExploreBook extends Component {
         })
     }
     timeout=()=>{
-        setTimeout(() =>{document.getElementById("404").innerHTML="Book Not Found"},5000)
+        setTimeout(() =>{document.getElementById("404").innerHTML="Book Not Found"},4000)
     }
     render() {
         // handleDataAuth()
@@ -72,6 +75,11 @@ class ExploreBook extends Component {
                     <h1 style={{ color: "grey", textAlign: "center" }}>List Book</h1 >
                     <button className="btnAvailable" name="available" onClick={this.handleStatus}>available</button>
                     <button className="btnBorrow" name="borrowed" onClick={this.handleStatus}>borrowed</button>
+                    {
+                        this.props.user.userInfo.access === 'admin' ?
+                        <button className="btnAccept" name="pending" onClick={this.handleStatus}>accept</button>
+                        : ''
+                    }
                     {
                         this.props.data.coloum === "B.Title" ?
                             <p id="filter">Search {this.props.data.title ? "Book title :" + this.props.data.title : "All"} | {this.props.data.status} | Page : {this.props.data.page}</p>

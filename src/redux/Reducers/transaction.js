@@ -47,7 +47,7 @@ const transaction = (state = initialState, action) =>{
                 ...state,
                 isLoading: false,
                 isFulFilled: true,
-                checkBorrowed: action.payload.data.data[0],
+                checkBorrowed: action.payload.data.data,
             }
         case 'GET_TRANSACTION_BORROW_PENDING':
             return {

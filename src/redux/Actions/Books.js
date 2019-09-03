@@ -66,14 +66,27 @@ export const updateBook = (myId, data) => {
     };
 };
 export const transaction = (query, data) => {
-    return {
-        type: 'TRANSACTION_BOOK',
-        payload: Axios.post(query, data, {
-            headers: {
-                Authorization: token,
-            },
-        }),
-    };
+    const borrow = query.includes('borrow')
+    console.log(data)
+    if(borrow){
+        return {
+            type: 'TRANSACTION_BOOK',
+            payload: Axios.post(query, data, {
+                headers: {
+                    Authorization: token,
+                },
+            }),
+        };
+    } else {
+        return {
+            type: 'TRANSACTION_BOOK',
+            payload: Axios.patch(query, data, {
+                headers: {
+                    Authorization: token,
+                },
+            }),
+        };
+    }
 };
 export const getYear = () => {
     return {

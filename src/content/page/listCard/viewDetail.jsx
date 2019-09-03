@@ -11,35 +11,40 @@ import { openModal, closeModal } from '../../../redux/Actions/Modals';
 import { connect } from 'react-redux';
 import ResponseModal from '../../../component/Modal/Response';
 import { userInfo } from '../../../redux/Actions/Users';
+import TransactionModal from '../../../component/Modal/Transaction';
 
 class ViewDetail extends Component {
-    state = {
-        getGenre: [],
-        dataApi: [],
-        date_released: "", //new Date().toISOString().split('T')[0],
-        date: "",
-        month: "",
-        year: "",
-        data: [],
-        formDataTransaction: {
-            id_users: "",
-            id_book: this.props.match.params.id,
-        },
-        formData: {
-            date_released: "",
-            description: "",
-            genre: "",
-            id: 1,
-            image: "",
-            status: "",
-            title: "",
-        },
-        deleteData: false,
-        editData: false,
-        faildata: false,
-        transaction: false,
-        ResponseModal: false,
+    constructor(props){
+        super(props)
+        this.state = {
+            getGenre: [],
+            dataApi: [],
+            date_released: "", //new Date().toISOString().split('T')[0],
+            date: "",
+            month: "",
+            year: "",
+            data: [],
+            formDataTransaction: {
+                id_users: this.props.user.userInfo.id,
+                id_book: this.props.match.params.id,
+            },
+            formData: {
+                date_released: "",
+                description: "",
+                genre: "",
+                id: 1,
+                image: "",
+                status: "",
+                title: "",
+            },
+            deleteData: false,
+            editData: false,
+            faildata: false,
+            transaction: false,
+            ResponseModal: false,
+        }
     }
+    
     handleEdit = () => {
         this.setState({
             ResponseModal: false
@@ -80,23 +85,34 @@ class ViewDetail extends Component {
         this.props.id_books(this.props.match.params.id)
         this.handleBtn()
     };
-    open = () => {
+    available = () => {
         document.getElementById("btnborrow").style.display = "block";
+        document.getElementById("btnaccept").style.display = "none";
+        document.getElementById("btnreturn").style.display = "none";
+
+    }
+    pending = () => {
+        document.getElementById("btnborrow").style.display = "none";
+        document.getElementById("btnaccept").style.display = "block";
         document.getElementById("btnreturn").style.display = "none";
 
     }
 
-    close = () => {
+    borrowed = () => {
         document.getElementById("btnborrow").style.display = "none";
+        document.getElementById("btnaccept").style.display = "none";
         document.getElementById("btnreturn").style.display = "block";
     }
     handleBtn = () => {
         if (this.state.dataApi.status === "available") {
-            this.open()
+            this.available()
+        } else
+            if (this.state.dataApi.status === "pending") {
+                this.pending()
         } else
             if (this.state.dataApi.status === "borrowed") {
-                this.close()
-            }
+                this.borrowed()
+        }
     }
     back = () => {
         this.setState({
@@ -179,7 +195,9 @@ class ViewDetail extends Component {
     handleTransactionToApi = () => {
         let data = this.state.formDataTransaction
         const host = process.env.REACT_APP_HOST_API || "http://localhost:3010"
-        const query = (this.state.dataApi.status === "available") ? host+`/transaction/borrow/` : host+`/transaction/return/`
+        const query = (this.state.dataApi.status === "available") ? host+`/transaction/borrow/` 
+            : (this.state.dataApi.status === "pending") ? host + `/transaction/accept/` 
+            : host+`/transaction/return/`
         this.props.Transaction(query, data)
             .then((res) => {
                 const data = res.action.payload.data
@@ -219,8 +237,9 @@ class ViewDetail extends Component {
     }
     render() {
         // console.log('id', this.props.match.params.id)
-        const checkBorrowedData = this.props.transaction.checkBorrowed
-        console.log('data', checkBorrowedData)
+        const dataBorrowed = this.props.transaction.checkBorrowed
+        const checkBorrowedData = dataBorrowed[0] || {Username: '',Date: ''}
+        // console.log('data',this.props.user.userInfo.id)
         const { getGenre, dataApi, formData } = this.state
         const rawDate = new Date(this.state.dataApi.date_released)
         let year = rawDate.getFullYear()
@@ -231,26 +250,12 @@ class ViewDetail extends Component {
             <Fragment>
                 <div>
                     <ResponseModal open={this.state.ResponseModal} data={this.state.data} />
-                    <Modal isOpen={this.state.transaction} toggle={this.faildata} size="lg">
-                        {/* <Form onSubmit={this.handleUpdate}> */}
-                        <ModalHeader style={{ fontWeight: "bold", color: "black" }} toggle={this.faildata} charCode="x">Add Data Transaction</ModalHeader>
-                        <ModalBody>
-                            <div className="boxModal">
-                                <FormGroup>
-                                    <Input onChange={this.handleFormTransaction} name="id_users" type="text" required />
-                                    <Label>Member Code</Label>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Input onChange={this.handleFormTransaction} name="id_book" type="text" value={this.props.match.params.id} disabled />
-                                    <Label>Id Book</Label>
-                                </FormGroup>
-                            </div>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={this.handleTransactionToApi} color="warning" className="ModalBtn">Save</Button>
-                        </ModalFooter>
-                        {/* </Form> */}
-                    </Modal>
+                    <TransactionModal open={this.state.transaction} close={this.faildata}
+                        id={this.props.match.params.id}
+                        id_users={this.props.user.userInfo.id}
+                        status={dataApi.status}
+                        handleFormTransaction={this.handleFormTransaction}
+                        handleTransactionToApi={this.handleTransactionToApi} />
                     <Modal isOpen={this.props.modal.myModal} toggle={this.props.closeModal} size="lg">
                         <Form>
                         <ModalHeader style={{ fontWeight: "bold", color: "black" }} toggle={this.props.closeModal} charCode="x">Edit Data</ModalHeader>
@@ -324,21 +329,25 @@ class ViewDetail extends Component {
                         {
                             this.props.user.userInfo.access === 'admin' ?
                                 <Fragment>
-                                    <div id="btnborrow">
-                                        <button id="borrow" onClick={this.handleTransaction}>borrow</button>
-                                    </div>
-                                    <div id="btnreturn">
-                                        <button id="return" onClick={this.handleTransaction}>return</button>
+                                    <div id="btnaccept">
+                                        <button id="accept" onClick={this.handleTransaction}>accept</button>
                                     </div>
                                 </Fragment>
                                 : ''
                         }
 
                         <div id="btnborrow">
+                            <button id="borrow" onClick={this.handleTransaction}>borrow</button>
                         </div>
+                        <div id="btnaccept"></div>
                         <div id="btnreturn">
                             {
-                                dataApi.status === "borrowed" && checkBorrowedData > 0 ?
+                                this.props.user.userInfo.access === 'admin' ?
+                                <button id="return" onClick={this.handleTransaction}>return</button>
+                                : ''
+                            }
+                            {
+                                dataApi.status === "borrowed" ?
                                 (
                                     <Fragment>
                                         <p>Borrowed By : {checkBorrowedData.Username} </p>
