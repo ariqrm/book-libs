@@ -13,7 +13,7 @@ class PageButton extends Component {
     plus = () => {
         const page = this.props.data.page
         const check = this.props.data.checkPage.length
-        if (check > 0) {
+        if (check === 12) {
             this.props.pagination(page + 1)
         }
     }
@@ -39,7 +39,7 @@ class PageButton extends Component {
                 }
                 <input type="text" disabled="disabled" value={data.page} />
                 {
-                    data.checkPage.length === 0 ?
+                    data.checkPage.length < 12 ?
                         <Button color="info" className="plus" onClick={this.plus} disabled>
                             <FontAwesomeIcon icon={faArrowRight} />
                         </Button>

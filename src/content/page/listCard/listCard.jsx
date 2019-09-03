@@ -95,7 +95,7 @@ class listCard extends Component {
                     <button className="btnBorrow" name="borrowed" onClick={this.handleStatus}>borrowed</button>
                     {
                         title ?
-                            <p id="filter">Filtered By {coloum === "G.NameOfGenre" ? "Genre" : "Year Realesed"} : {title} | {status} | Page : {page}</p>
+                            <p id="filter">Filtered By {coloum === "G.Genre" ? "Genre" : "Year Realesed"} : {title} | {status} | Page : {page}</p>
                             :
                             <p></p>
                     }

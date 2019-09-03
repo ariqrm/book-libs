@@ -107,7 +107,7 @@ export class AddModal extends React.Component {
                                     <Input type="select" onChange={this.handleAddBook} name="id_genre">
                                         {getGenre ?
                                             getGenre.map(genre => {
-                                                return <option key={genre.id} value={genre.id}>{genre.NameOfGenre}</option>
+                                                return <option key={genre.id} value={genre.id}>{genre.Genre}</option>
                                             })
                                             : <option>Loading Fetch...</option>
                                         }

@@ -60,7 +60,7 @@ class ViewDetail extends Component {
             date_released: data[0].date_released.split("T")[0],
         })
         const { getGenre, dataApi } = this.state
-        const genre_id = getGenre.map(genre => genre.NameOfGenre).indexOf(dataApi.genre) + 1
+        const genre_id = getGenre.map(genre => genre.Genre).indexOf(dataApi.genre) + 1
         const rawDate = new Date(this.state.dataApi.date_released)
         let year = rawDate.getFullYear()
         let month = rawDate.getMonth() < 10 ? '0' + (rawDate.getMonth() + 1) : rawDate.getMonth() + 1
@@ -281,7 +281,7 @@ class ViewDetail extends Component {
                                     >
                                         {getGenre ?
                                             getGenre.map(genre => {
-                                                return <option key={genre.id} value={genre.id}>{genre.NameOfGenre}</option>
+                                                return <option key={genre.id} value={genre.id}>{genre.Genre}</option>
                                             })
                                             : <option>Loading...</option>
                                         }

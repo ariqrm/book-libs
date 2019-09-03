@@ -34,17 +34,20 @@ class App extends Component {
     }
   }
   getAPI = async (title, coloum, page, available) => {
-    const Title = title || this.state.title
+    // const params = new URLSearchParams(window.location.search)
+    const Title =  title || this.state.title
     const Coloum = coloum || this.state.coloum
+    // const Title = params.get("Genre") || params.get("DateReleased") || title || this.state.title
+    // const Coloum = params.get("Genre") ? "G.Genre" : params.get("DateReleased") ? "B.DateReleased" : this.state.coloum
     const Page = page || this.state.page
     const Available = available || this.state.status
-    const checkPage = Page + 1
-    await this.props.Book(Title, Coloum, checkPage, Available)
-    this.setState({
-      checkPage: this.props.book.bookList
-    })
+    // const checkPage = Page + 1
+    // await this.props.Book(Title, Coloum, checkPage, Available)
+    // this.setState({
+    // })
     await this.props.Book(Title, Coloum, Page, Available)
     this.setState({
+      checkPage: this.props.book.bookList,
       getBook: this.props.book,
       coloum: Coloum,
       page: Page,
@@ -68,12 +71,12 @@ class App extends Component {
     }
   }
   handlePage = (page) => {
-    const title = this.state.title
-    const coloum = this.state.coloum
-    const mpage = page || this.state.page
-    const status = this.state.status
+    const Title = this.state.title
+    const Coloum = this.state.coloum
+    const Page = page || this.state.page
+    const Status = this.state.status
     if (page) {
-      this.getAPI(title, coloum, mpage, status)
+      this.getAPI(Title, Coloum, Page, Status)
     }
   }
   handleViewDetail = (id) => {
@@ -114,10 +117,12 @@ class App extends Component {
   }
   render(){
     const data = this.state
+    console.log(new URLSearchParams(window.location.search).get("DateReleased"))
     return (
       <Fragment>
         <Router>
           <div className="main" id="main">
+            <main>
             {
               window.location.pathname === '/login' ||
               window.location.pathname === '/Login' || 
@@ -126,18 +131,18 @@ class App extends Component {
               window.location.pathname === `/home/detail-book/${data.detail_id_books}` ? '':
               <NavBar filter={this.handleSubmit} />
             }
-            <main>
               <Switch>
                 <Route path='/' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
                 <Route path='/login' component={Login} />
                 <Route path='/register' component={Register} />
                 <Route path='/home' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />
-                <Route path='/home/history' render={props => (<HistoryTransaction filter={this.handleSubmit} data={this.state} {...props} />)} />
+                <Route path='/history' render={props => (<HistoryTransaction data={this.state} {...props} />)} />
                 <Route path='/home/detail-book/:id' render={props => (<ViewDetail id_books={this.id_books} {...props} />)} />
                 {/* <Route path='/homelist' exact component={listCard} /> */}
                 <Route component={NoMatch} />
               </Switch>
             </main>
+            <p id="404" hidden></p>
           </div>
         </Router>
       </Fragment>

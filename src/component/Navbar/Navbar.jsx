@@ -25,7 +25,7 @@ class NavBar extends Component {
     handleSubmit = (event) => {
         const page = this.state.page
         const status = this.state.status
-        if (event.target.name === "G.NameOfGenre") {
+        if (event.target.name === "G.Genre") {
             this.props.filter(event.target.value, event.target.name, page, status)
         } else if (event.target.name === "B.DateReleased") {
             this.props.filter(event.target.value, event.target.name, page, status)
@@ -77,22 +77,27 @@ class NavBar extends Component {
                     {
                         this.props.user.userInfo.length === 0 ?
                         <Fragment>
-                            <Link onClick={()=>window.location.replace('/login')}>Login</Link>
-                            <Link onClick={()=>window.location.replace('/register')}>Register</Link>
+                            <div className="sidenavContent">
+                                <Link onClick={()=>window.location.replace('/login')}>Login</Link>
+                                <Link onClick={()=>window.location.replace('/register')}>Register</Link>
+                            </div>
                         </Fragment>
                         :
                         <Fragment>
-                            <img src="http://clws.karnataka.gov.in/assets/icons/manager.png" alt="" />
-                            <h5> Member Code: {this.props.user.userInfo.id}</h5>
+                            <img src="https://pbs.twimg.com/profile_images/1156727030827716608/gppZ606-_400x400.png" alt="" />
                             <p>{this.props.user.userInfo.Username}</p>
-                            <Link onClick={this.handleSidebar} to="/home/history">History</Link>
-                                {
-                                    this.props.user.userInfo.access === 'admin' ?
-                                        <AddModal closeNav={this.handleSidebar} />
-                                        :
-                                        ''
-                                }
-                            <Link onClick={this.handleSignOut}>Logout</Link>
+                            <p> Member Code: </p>
+                            <p>{this.props.user.userInfo.id}</p>
+                            <div className="sidenavContent">
+                                <Link onClick={this.handleSidebar} to="/history">History</Link>
+                                    {
+                                        this.props.user.userInfo.access === 'admin' ?
+                                            <AddModal closeNav={this.handleSidebar} />
+                                            :
+                                            ''
+                                    }
+                                <Link onClick={this.handleSignOut}>Logout</Link>
+                            </div>
                         </Fragment>
                     }
                 </div>
@@ -103,15 +108,15 @@ class NavBar extends Component {
                             <button className="dropbtn">All Category <FontAwesomeIcon icon={faSortDown} /></button>
                         </Link>
                         <div className="dropdown-content">
-                            {genre.genreList !== null ?
+                            {genre.genreList.length > 0 ?
                                 genre.genreList.map(genre => {
                                     return (
-                                    <Link to="/home">
+                                    <Link to={"/home?Genre="+genre.Genre}>
                                         <button
                                         onClick={this.handleSubmit}
-                                        name="G.NameOfGenre"
+                                        name="G.Genre"
                                         key={genre.id} to="#"
-                                        value={genre.NameOfGenre} >{genre.NameOfGenre}
+                                        value={genre.Genre} >{genre.Genre}
                                         </button>
                                     </Link>)
                                 })
@@ -124,10 +129,10 @@ class NavBar extends Component {
                             <button className="dropbtn">All Time <FontAwesomeIcon icon={faSortDown} /></button>
                         </Link>
                         <div className="dropdown-content">
-                            {book.yearList !== null ?
+                            {book.yearList.length > 0 ?
                                 book.yearList.map((years, index) => {
                                     return (
-                                    <Link to="/home">
+                                        <Link to={"/home?DateReleased=" + years.year}>
                                         <button
                                             onClick={this.handleSubmit}
                                             name="B.DateReleased"

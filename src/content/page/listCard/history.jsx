@@ -7,6 +7,12 @@ import './history.css';
 // import { userInfo } from '../../../redux/Actions/Users';
 
 class HistoryTransaction extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            sidebar: false,
+        }
+    }
     // componentDidMount= async ()=>{
     //     const id_users = this.props.user.userInfo.id
     //     await this.props.GetBorrow(id_users)
