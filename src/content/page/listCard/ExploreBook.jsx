@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import Card from '../../../component/Card/Card'
 import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
-// import { handleDataAuth } from '../../../redux/Actions/Users';
-import { getFilterBook } from '../../../redux/Actions/Books';
+import { handleDataAuth } from '../../../redux/Actions/Users';
+// import { getFilterBook } from '../../../redux/Actions/Books';
 import './listCard.css'
 import PageButton from './PageButton';
 import CarouselBook from '../../../component/Carousel/Carousel';
@@ -53,18 +53,18 @@ class ExploreBook extends Component {
     handleViewDetail = (id) => {
         this.props.history.push(`/home/detail-book/${id}`)
     }
-    componentDidMount = async () => {
-        await this.props.dispatch(getFilterBook())
-        this.setState({
-            getBook: this.props.book,
-            checkPage: this.props.book.bookList,
-        })
-    }
+    // componentDidMount = async () => {
+    //     await this.props.dispatch(getFilterBook())
+    //     this.setState({
+    //         getBook: this.props.book,
+    //         checkPage: this.props.book.bookList,
+    //     })
+    // }
     timeout=()=>{
         setTimeout(() =>{document.getElementById("404").innerHTML="Book Not Found"},4000)
     }
     render() {
-        // handleDataAuth()
+        handleDataAuth()
         const { book } = this.props || '';
         return (
             <Fragment>
@@ -77,7 +77,7 @@ class ExploreBook extends Component {
                     <button className="btnBorrow" name="borrowed" onClick={this.handleStatus}>borrowed</button>
                     {
                         this.props.user.userInfo.access === 'admin' ?
-                        <button className="btnAccept" name="pending" onClick={this.handleStatus}>accept</button>
+                        <button className="btnAccept" name="pending" onClick={this.handleStatus}>request</button>
                         : ''
                     }
                     {

@@ -14,18 +14,23 @@ import { userInfo } from '../../../redux/Actions/Users';
 import TransactionModal from '../../../component/Modal/Transaction';
 
 class ViewDetail extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
+            loading: false,
             getGenre: [],
             dataApi: [],
             date_released: "", //new Date().toISOString().split('T')[0],
             date: "",
+            Image: {},
             month: "",
             year: "",
             data: [],
-            formDataTransaction: {
+            formDataTransBorrow: {
                 id_users: this.props.user.userInfo.id,
+                id_book: this.props.match.params.id,
+            },
+            formDataTransaction: {
                 id_book: this.props.match.params.id,
             },
             formData: {
@@ -44,7 +49,7 @@ class ViewDetail extends Component {
             ResponseModal: false,
         }
     }
-    
+
     handleEdit = () => {
         this.setState({
             ResponseModal: false
@@ -81,6 +86,10 @@ class ViewDetail extends Component {
                 status: this.state.dataApi.status,
                 title: this.state.dataApi.title,
             },
+            formDataTransBorrow: {
+                id_users: this.props.user.userInfo.id,
+                id_book: this.props.match.params.id,
+            },
         })
         this.props.id_books(this.props.match.params.id)
         this.handleBtn()
@@ -109,10 +118,10 @@ class ViewDetail extends Component {
         } else
             if (this.state.dataApi.status === "pending") {
                 this.pending()
-        } else
-            if (this.state.dataApi.status === "borrowed") {
-                this.borrowed()
-        }
+            } else
+                if (this.state.dataApi.status === "borrowed") {
+                    this.borrowed()
+                }
     }
     back = () => {
         this.setState({
@@ -135,10 +144,25 @@ class ViewDetail extends Component {
             formDataTransaction: newformDataTransaction
         })
     }
-    handleUpdate = () => {
+    handleFile = (event) => {
+        const files = Array.from(event.target.files)
+        this.setState({ Image: files[0] })
+    }
+    handleUpdate = (event) => {
+        event.preventDefault()
         const myId = this.props.match.params.id;
-        const data = this.state.formData
-        this.props.UpdateBook(myId, data)
+        let formData = new FormData()
+        formData.append('title', this.state.formData.title)
+        formData.append('description', this.state.formData.description)
+        formData.append('date_released', this.state.formData.date_released)
+        formData.append('genre', this.state.formData.genre)
+        formData.append('status', this.state.formData.status)
+        formData.append('prevImg', this.state.formData.image)
+        formData.append('Image', this.state.Image)
+        this.setState({
+            loading: true,
+        })
+        this.props.UpdateBook(myId, formData)
             .then((res) => {
                 const data = res.action.payload.data
                 if (data.succes) {
@@ -166,38 +190,54 @@ class ViewDetail extends Component {
             })
     }
     handleRemove = () => {
-        const myId = this.props.match.params.id;
-        this.props.DeleteBook(myId)
-            .then((res) => {
-                const data = res.action.payload.data
-                if (data.succes) {
-                    this.setState({
-                        ResponseModal: true,
-                        data: data,
-                    })
-                } else {
-                    this.setState({
-                        ResponseModal: true,
-                        data: data,
-                    })
-                }
-            })
-            .catch(err => {
-                const data = {
-                    message: "access denied",
-                }
-                this.setState({
-                    ResponseModal: true,
-                    data: data
+        const data = {
+            message: "Are you sure ?",
+        }
+        this.setState({
+            ResponseModal: true,
+            data: data
+        })
+    }
+    RemovingData = (data) => {
+        if (data === true) {
+            const myId = this.props.match.params.id;
+            this.props.DeleteBook(myId)
+                .then((res) => {
+                    const data = res.action.payload.data
+                    if (data.succes) {
+                        this.setState({
+                            ResponseModal: true,
+                            data: data,
+                        })
+                    } else {
+                        this.setState({
+                            ResponseModal: true,
+                            data: data,
+                        })
+                    }
                 })
+                .catch(err => {
+                    const data = {
+                        message: "access denied",
+                    }
+                    this.setState({
+                        ResponseModal: true,
+                        data: data
+                    })
+                })
+        } else {
+            this.setState({
+                ResponseModal: false,
             })
+        }
     }
     handleTransactionToApi = () => {
-        let data = this.state.formDataTransaction
+        let data = this.state.dataApi.status === "available" ? this.state.formDataTransBorrow : this.state.formDataTransaction
         const host = process.env.REACT_APP_HOST_API || "http://localhost:3010"
-        const query = (this.state.dataApi.status === "available") ? host+`/transaction/borrow/` 
-            : (this.state.dataApi.status === "pending") ? host + `/transaction/accept/` 
-            : host+`/transaction/return/`
+        const query = (this.state.dataApi.status === "available") ? host + `/transaction/borrow/`
+            : (this.state.dataApi.status === "pending") ? host + `/transaction/accept/`
+                : host + `/transaction/return/`
+        console.log(data, query)
         this.props.Transaction(query, data)
             .then((res) => {
                 const data = res.action.payload.data
@@ -236,10 +276,8 @@ class ViewDetail extends Component {
         })
     }
     render() {
-        // console.log('id', this.props.match.params.id)
         const dataBorrowed = this.props.transaction.checkBorrowed
-        const checkBorrowedData = dataBorrowed[0] || {Username: '',Date: ''}
-        // console.log('data',this.props.user.userInfo.id)
+        const checkBorrowedData = dataBorrowed[0] || { Username: '', Date: '' }
         const { getGenre, dataApi, formData } = this.state
         const rawDate = new Date(this.state.dataApi.date_released)
         let year = rawDate.getFullYear()
@@ -249,7 +287,7 @@ class ViewDetail extends Component {
         return (
             <Fragment>
                 <div>
-                    <ResponseModal open={this.state.ResponseModal} data={this.state.data} />
+                    <ResponseModal open={this.state.ResponseModal} data={this.state.data} confirmed={this.RemovingData} />
                     <TransactionModal open={this.state.transaction} close={this.faildata}
                         id={this.props.match.params.id}
                         id_users={this.props.user.userInfo.id}
@@ -257,51 +295,53 @@ class ViewDetail extends Component {
                         handleFormTransaction={this.handleFormTransaction}
                         handleTransactionToApi={this.handleTransactionToApi} />
                     <Modal isOpen={this.props.modal.myModal} toggle={this.props.closeModal} size="lg">
-                        <Form>
-                        <ModalHeader style={{ fontWeight: "bold", color: "black" }} toggle={this.props.closeModal} charCode="x">Edit Data</ModalHeader>
-                        <ModalBody>
-                            <div className="boxModal">
-                                <FormGroup>
-                                    <Input onChange={this.handleForm} name="image" type="text" value={formData.image} required />
-                                    <Label>Url image</Label>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Input onChange={this.handleForm} name="title" type="text" value={formData.title} required />
-                                    <Label>Title</Label>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Input onChange={this.handleForm} name="date_released" type="date" required
-                                        defaultValue={date_released}
-                                        value={date_released}
-                                    // defaultValue={new Date(formData.date_released)}
-                                    // value={new Date(formData.date_released)}
-                                    />
-                                    <Label>Released</Label>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Input type="select" onChange={this.handleForm}
-                                        name="genre"
-                                        value={formData.genre}
-                                        defaultValue={formData.genre}
-                                    >
-                                        {getGenre ?
-                                            getGenre.map(genre => {
-                                                return <option key={genre.id} value={genre.id}>{genre.Genre}</option>
-                                            })
-                                            : <option>Loading...</option>
-                                        }
-                                    </Input>
-                                    <Label>Genre</Label>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Input type="textarea" onChange={this.handleForm} name="description" value={formData.description} required />
-                                    <Label>Description</Label>
-                                </FormGroup>
-                            </div>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={this.handleUpdate} color="warning" className="ModalBtn">Save</Button>
-                        </ModalFooter>
+                        <Form onSubmit={this.handleUpdate} encType="multipart/form-data">
+                            <ModalHeader style={{ fontWeight: "bold", color: "black" }} toggle={this.props.closeModal} charCode="x">Edit Data</ModalHeader>
+                            <ModalBody>
+                                <div className="boxModal">
+                                    <FormGroup>
+                                        <Input onChange={this.handleFile} name="image" type="file" required />
+                                        <Label>Url image</Label>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input onChange={this.handleForm} name="title" type="text" value={formData.title} required />
+                                        <Label>Title</Label>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input onChange={this.handleForm} name="date_released" type="date" required
+                                            defaultValue={date_released}
+                                            value={date_released}
+                                        // defaultValue={new Date(formData.date_released)}
+                                        // value={new Date(formData.date_released)}
+                                        />
+                                        <Label>Released</Label>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input type="select" onChange={this.handleForm}
+                                            name="genre"
+                                            value={formData.genre}
+                                            defaultValue={formData.genre}
+                                        >
+                                            {getGenre ?
+                                                getGenre.map(genre => {
+                                                    return <option key={genre.id} value={genre.id}>{genre.Genre}</option>
+                                                })
+                                                : <option>Loading...</option>
+                                            }
+                                        </Input>
+                                        <Label>Genre</Label>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Input type="textarea" onChange={this.handleForm} name="description" value={formData.description} required />
+                                        <Label>Description</Label>
+                                    </FormGroup>
+                                </div>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="warning" className="ModalBtn">
+                                    {this.state.loading ? 'Loading...' : 'Save'}
+                                </Button>
+                            </ModalFooter>
                         </Form>
                     </Modal>
                 </div>
@@ -343,19 +383,19 @@ class ViewDetail extends Component {
                         <div id="btnreturn">
                             {
                                 this.props.user.userInfo.access === 'admin' ?
-                                <button id="return" onClick={this.handleTransaction}>return</button>
-                                : ''
+                                    <button id="return" onClick={this.handleTransaction}>return</button>
+                                    : ''
                             }
                             {
                                 dataApi.status === "borrowed" ?
-                                (
-                                    <Fragment>
-                                        <p>Borrowed By : {checkBorrowedData.Username} </p>
-                                        <p>Date Borrowed : {new Date(checkBorrowedData.Date).toDateString()} </p>
-                                    </Fragment>
-                                )
-                                :
-                                ''
+                                    (
+                                        <Fragment>
+                                            <p>Borrowed By : {checkBorrowedData.Username} </p>
+                                            <p>Date Borrowed : {new Date(checkBorrowedData.Date).toDateString()} </p>
+                                        </Fragment>
+                                    )
+                                    :
+                                    ''
                             }
                         </div>
                         <p id="title"> {dataApi.title} </p>

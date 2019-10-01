@@ -174,17 +174,18 @@ span.library {
     outline: none;
 }
 
-.sidenav#mySidenav {
-    width: 347px;
-    height: 1024px;
+.sidenav {
+    width: 0px;
+    height: 100%;
     position: fixed;
     z-index: 999;
     top: 0;
     left: 0;
-    display: none;
+    /* display: none; */
     background-color: #fff;
-    transition: width 10s;
-    -webkit-transition: width 10s;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    overflow-x: hidden;
     padding-top: 60px;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
 }
@@ -194,12 +195,12 @@ span.library {
     height: 150px;
     position: absolute;
     right: 20%;
-    top: 5%;
+    top: 20px;
     /* left: 94px;
     top: 66px;
     padding: 8px 8px 8px 32px;
     color: #707070;
-    transition: 0.3s;
+    transition: 0.5s;
     display: block; */
     border-radius: 150px;
 }
@@ -207,8 +208,9 @@ span.library {
 .sidenav p {
     position: relative;
     margin: 0;
-    top: 15%;
+    top: 120px;
     text-align: center;
+    transition: 0.5s;
     font-family: cursive;
     font-size: 20px;
     color: #000000;
@@ -220,8 +222,8 @@ span.library {
     text-decoration: none;
     font-size: 25px;
     color: #707070;
-    transition: 0.3s;
-    display: block;
+    /* transition: 0.5s; */
+    /* display: block; */
 }
 
 .sidenav a:hover {
@@ -231,7 +233,8 @@ span.library {
 
 .sidenav .sidenavContent {
     position: relative;
-    top: 15%;
+    /* transition: 0.5s; */
+    top: 120px;
     /* margin-left: 50px; */
 }
 

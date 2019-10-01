@@ -29,11 +29,10 @@ class ResponseModal extends Component {
         }
     }
     render() {
-        console.log(this.props.data)
         return (
             <Fragment>
                 <Modal isOpen={this.props.open}>
-                    <ModalHeader style={{ textAlign: "center", fontWeight: "bold", color: "black" }}>{this.props.data.success ? "Success" : "Failed"}</ModalHeader>
+                    <ModalHeader style={{ textAlign: "center", fontWeight: "bold", color: "black" }}>{this.props.data.success ? "Success" : !this.props.data.success === false ? "Failed" : "Confirmation"}</ModalHeader>
                     <ModalBody>
                         {
                             this.props.data.success ?
@@ -50,8 +49,14 @@ class ResponseModal extends Component {
                     </ModalBody>
                     <ModalFooter>
                         {
+                            this.props.data.message === "Are you sure ?" ?
+                            <Fragment>
+                                <Button color="warning" className="ModalBtn" onClick={()=>this.props.confirmed(false)}>cencel</Button>
+                                <Button color="warning" className="ModalBtn" onClick={()=>this.props.confirmed(true)}>Yes</Button>
+                            </Fragment>
+                                :
                             this.props.data.message === "book deleted" ?
-                                <Button color="warning" className="ModalBtn" onClick={this.handleHome}>Home</Button>
+                                <Button color="warning" className="ModalBtn" onClick={this.handleHome}>home</Button>
                                 :
                                 <Button color="warning" className="ModalBtn" onClick={this.handleReload}>Reload</Button>
                         }

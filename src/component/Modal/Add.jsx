@@ -12,17 +12,19 @@ export class AddModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            loading: false,
             getGenre: [],
             bookAdded: [],
             book: [],
             formData: {
-                Image: "https://static9.depositphotos.com/1008244/1074/v/950/depositphotos_10745131-stock-illustration-open-book.jpg",
+                // Image: "https://static9.depositphotos.com/1008244/1074/v/950/depositphotos_10745131-stock-illustration-open-book.jpg",
                 Title: "",
                 DateReleased: new Date().toISOString().split('T')[0],
                 id_genre: 1,
                 id_status: 2,
                 Description: ""
             },
+            Image: {},
             isAddData: false,
         }
     }
@@ -40,11 +42,26 @@ export class AddModal extends React.Component {
             formData: newFormData
         })
     }
-    handleSubmit = () => {
-        this.props.addBook(this.state.formData)
+    handleFile = (event) => {
+        const files = Array.from(event.target.files)
+        this.setState({ Image: files[0] })
+    }
+    handleSubmit = (event) => {
+        event.preventDefault()
+        let formData = new FormData()
+        formData.append('Title', this.state.formData.Title)
+        formData.append('Description', this.state.formData.Description)
+        formData.append('DateReleased', this.state.formData.DateReleased)
+        formData.append('id_genre', this.state.formData.id_genre)
+        formData.append('Image', this.state.Image)
+        this.setState({
+            loading: true,
+        })
+        this.props.addBook(formData)
             .then((res) => {
+                console.log('sas',res)
                 const data = res.action.payload.data
-                if (data.succes) {
+                if (data.success === true) {
                     this.setState({
                         isAddData: true,
                         bookAdded: data,
@@ -87,12 +104,12 @@ export class AddModal extends React.Component {
             <div>
                 <Link to="#" onClick={this.handleClick}>Add Book{console.log(this.props.modal)}</Link>
                 <Modal isOpen={this.props.modal.myModal} toggle={this.props.closeModal} size="lg">
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={this.handleSubmit} encType="multipart/form-data">
                         <ModalHeader style={{ fontWeight: "bold", color: "black" }} toggle={this.props.closeModal} charCode="x">Add Data</ModalHeader>
                         <ModalBody>
                             <div className="boxModal">
                                 <FormGroup>
-                                    <Input onChange={this.handleAddBook} name="Image" type="file" placeholder="Url Image" required />
+                                    <Input onChange={this.handleFile} name="Image" type="file" placeholder="Url Image" required />
                                     <Label>Url image</Label>
                                 </FormGroup>
                                 <FormGroup>
@@ -121,7 +138,9 @@ export class AddModal extends React.Component {
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="warning" className="ModalBtn">Save</Button>
+                            <Button color="warning" className="ModalBtn">
+                                {this.state.loading ? 'Loading...' : 'Add'}
+                            </Button>
                         </ModalFooter>
                     </Form>
                 </Modal>

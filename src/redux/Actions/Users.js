@@ -18,7 +18,7 @@ export const handleDataAuth = () => {
     const auth = localStorage.getItem('Token=')
     if (!auth) {
         const hosts = window.location.host
-        window.location.replace(hosts + "/login")
+        window.location.replace('http://'+hosts + "/login")
     }
 }
 export const userInfo = () => {

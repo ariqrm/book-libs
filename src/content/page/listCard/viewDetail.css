@@ -200,11 +200,11 @@ a#delete:hover {
 }
 
 .pageDetail div#action a#edit {
-    left: 80%;
+    right: 160px;
     top: 1.1%;
 }
 
 .pageDetail div#action a#delete {
-    left: 84.7%;
+    right: 70px;
     top: 1.1%;
 }

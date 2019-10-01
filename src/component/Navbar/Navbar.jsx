@@ -36,14 +36,18 @@ class NavBar extends Component {
     }
     openNav = () => {
         document.getElementById("mySidenav").style.width = "250px";
+        // document.getElementById("mySidenav").style.display = "block";
+        // document.getElementById("mySidenav").style.transition = "1s";
+        document.getElementById("main").style.transition = "0.5s";
         document.getElementById("main").style.marginLeft = "250px";
-        document.getElementById("mySidenav").style.display = "block";
 
     }
     closeNav = () => {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft = "0";
-        document.getElementById("mySidenav").style.display = "none";
+        document.getElementById("mySidenav").style.width = "0px";
+        // document.getElementById("mySidenav").style.display = "none";
+        // document.getElementById("mySidenav").style.transition = "1s";
+        document.getElementById("main").style.transition = "0.5s";
+        document.getElementById("main").style.marginLeft = "0px";
     }
     handleSidebar = () => {
         if (this.state.sidebar === false) {
@@ -85,8 +89,9 @@ class NavBar extends Component {
                         :
                         <Fragment>
                             <img src="https://pbs.twimg.com/profile_images/1156727030827716608/gppZ606-_400x400.png" alt="" />
+                            <p> Username </p>
                             <p>{this.props.user.userInfo.Username}</p>
-                            <p> Member Code: </p>
+                            <p> Member Id </p>
                             <p>{this.props.user.userInfo.id}</p>
                             <div className="sidenavContent">
                                 <Link onClick={this.handleSidebar} to="/home/history">History</Link>
