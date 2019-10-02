@@ -127,8 +127,8 @@ class ViewDetail extends Component {
         this.setState({
             ResponseModal: false
         })
-        // window.location.replace("/home")
-        this.props.history.push('/home')
+        window.location.replace("/home")
+        // this.props.history.push('/home')
     }
     handleForm = (event) => {
         var newFormData = { ...this.state.formData };
