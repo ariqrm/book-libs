@@ -124,13 +124,10 @@ class App extends Component {
           <div className="main" id="main">
             <main>
             {
-              window.location.pathname === '/home/history' ||
-              window.location.pathname === '/login' ||
-              window.location.pathname === '/Login' || 
-              window.location.pathname === '/register' ||
-              window.location.pathname === '/Register' || 
-              window.location.pathname === `/home/detail-book/${data.detail_id_books}` ? '':
+              window.location.pathname === '/home'
+              ?
               <NavBar filter={this.handleSubmit} />
+              : ''
             }
               <Switch>
                 <Route path='/' exact render={props => (<ExploreBook filter={this.handleSubmit} data={this.state} {...props} />)} />

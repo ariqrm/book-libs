@@ -1,10 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Table } from 'reactstrap';
-// import NavBar from '../../../component/Navbar/Navbar';
 import { connect } from 'react-redux';
 import './history.css';
-// import { getReturn, getBorrow } from '../../../redux/Actions/Transaction';
-// import { userInfo } from '../../../redux/Actions/Users';
 
 class HistoryTransaction extends Component {
     constructor(props) {
@@ -13,17 +10,10 @@ class HistoryTransaction extends Component {
             sidebar: false,
         }
     }
-    // componentDidMount= async ()=>{
-    //     const id_users = this.props.user.userInfo.id
-    //     await this.props.GetBorrow(id_users)
-    //     await this.props.GetReturn(id_users)
-    // }
     render() {
-        // console.log(this.props.transaction)
         const data = this.props.transaction
         return (
             <Fragment>
-                {/* <NavBar /> */}
                 <br /><br /><br /><br />
                 <Table className="history" border responsive size="sm" >
                     <thead>
@@ -83,12 +73,5 @@ const mapStateToProps = state => {
         user: state.user,
     }
 }
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         UserInfo: () => dispatch(userInfo()),
-//         GetReturn: (id) => dispatch(getReturn(id)),
-//         GetBorrow: (id) => dispatch(getBorrow(id)),
-//     }
-// }
 
 export default connect(mapStateToProps)(HistoryTransaction)
